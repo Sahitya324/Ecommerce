@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useRef } from "react";
 import Chart from "../Components/Chart/chart";
-import { Col, Layout, Menu, Row, Card, Tooltip, Carousel } from "antd";
+import {
+  Col,
+  Layout,
+  Menu,
+  Row,
+  Card,
+  Tooltip,
+  Carousel,
+  Image,
+  Button,
+} from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 
 const { Content } = Layout;
@@ -8,14 +18,19 @@ const { subMenu } = Menu;
 
 const contentStyle = {
   // width: '80%',
-  height: "160px",
+  height: "260px",
   color: "#fff",
-  lineHeight: "160px",
+  display: "flex",
+  justifyContent: "center",
+  alignItem: "center",
+  lineHeight: "260px",
   textAlign: "center",
   background: "#364d79",
 };
 
 export default function Dash() {
+  const ref = useRef();
+
   return (
     <>
       <Content
@@ -61,7 +76,7 @@ export default function Dash() {
                   hoverable
                   title="Card Details"
                   bordered={false}
-                  style={{ height: "180px" }}
+                  style={{ height: "280px" }}
                 >
                   Card Details
                 </Card>
@@ -71,25 +86,65 @@ export default function Dash() {
                   hoverable
                   title="Card Details"
                   bordered={false}
-                  style={{ height: "180px" }}
+                  style={{ height: "280px" }}
                 >
-                  Card Details
+                  <div
+                  style={{
+                    display: "flex",
+                    height: "100%",
+                    flexDirection: "row"
+                  }}
+                  >
+                    <img
+                      width={"full"}
+                      height={"175px"}
+                      alt="image0"
+                      src="/assets/image_0.png"
+                    />
+                    <div>
+                    <h1>Apple Pod</h1>
+                    <h2>Price</h2>
+                    <p>Details</p>
+                    <Button>Buy</Button>
+                    </div>
+                  </div>
                 </Card>
               </Col>
             </Row>
           </div>
         </div>
         <div
-          className="site-layout-background"
+          // className="site-layout-background"
           style={{
+            display: "flex",
+            flexDirection: "row",
             padding: 24,
             minHeight: 260,
+            justifyContent: "center",
+            alignItems: "center",
+            // width: "100%"
           }}
         >
-          <Card>
-            <Carousel autoplay className="carousel">
+          <Button
+            onClick={() => {
+              ref.current.prev();
+            }}
+          >
+            Prev
+          </Button>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              width: "80%",
+              height: "100%",
+            }}
+          >
+            <Carousel ref={ref} autoplay={false} className="carousel">
               <div>
-                <h3 style={contentStyle}>1</h3>
+                {/* <h3 style={contentStyle}>1</h3> */}
+                <Image src="/assets/image_9.png" />
               </div>
               <div>
                 <h3 style={contentStyle}>2</h3>
@@ -101,7 +156,14 @@ export default function Dash() {
                 <h3 style={contentStyle}>4</h3>
               </div>
             </Carousel>
-          </Card>
+          </div>
+          <Button
+            onClick={() => {
+              ref.current.next();
+            }}
+          >
+            Next
+          </Button>
         </div>
         <div
           className="site-layout-background"

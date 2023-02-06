@@ -10,3 +10,21 @@
     */transition: visibility 1s , opacity 0.5s ease-in-out;
 
 }
+
+.login{
+    margin-left: 30%;
+    margin-top: 100px;
+}
+
+.register{
+    margin-left: 30%;
+    margin-top: 100px;
+}
+
+.inputBox{
+    padding: 7px;
+    display: block;
+    border: 1px solid skyblue;
+    width: 300px;
+    margin: 20px;
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Headers.css";
 import { Layout, Menu, Dropdown, Space, Input, Image } from "antd";
 import {
@@ -10,6 +10,7 @@ import {
   LogoutOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const { Header } = Layout;
 const { subMenu } = Menu;
@@ -36,7 +37,7 @@ const menu = (
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://www.aliyun.com"
+            href="https://www.antgroup.com"
           >
             Setting
           </a>
@@ -50,7 +51,8 @@ const menu = (
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://www.luohanacademy.com"
+            href="/login"
+            onClick={() => localStorage.clear()}
           >
             Logout
           </a>
@@ -64,6 +66,8 @@ const menu = (
 function Headers() {
   const [hideFilter, setHideFilter] = useState(false);
   const [showFilter, SetShowFilter] = useState(true);
+
+  const auth = localStorage.getItem("user");
 
   return (
     <Header
@@ -107,7 +111,66 @@ function Headers() {
               Ant Design Pro
             </h1>
           </a>
-          <div
+          {auth ? (
+            <div
+              style={{
+                display: "flex",
+                color: "#fff",
+                // position: 'absolute',
+                float: "left",
+                marginLeft: "auto",
+                marginRight: "35px",
+                gap: "25px",
+              }}
+            >
+              <div className="hh" style={{ display: "flex", gap: "10px" }}>
+                {showFilter && (
+                  <div
+                    onClick={() => {
+                      setHideFilter(true);
+                    }}
+                  >
+                    <SearchOutlined />
+                  </div>
+                )}
+                {hideFilter && (
+                  // <div  className='sssds' style={hideFilter ? { display: 'block', visibility: 'visible', opacity: 1} : { visibility: 'hidden', opacity: 0}}>
+                  <div>
+                    <Input
+                      addonAfter={
+                        <CloseOutlined
+                          onClick={() => {
+                            setHideFilter(false);
+                          }}
+                        />
+                      }
+                      style={{ height: "22px", marginTop: "8px" }}
+                    ></Input>
+                  </div>
+                )}
+              </div>
+              <div>
+                <QuestionCircleOutlined />
+              </div>
+              <div>
+                <BellOutlined />
+              </div>
+              <Dropdown overlay={menu}>
+                <a onClick={(e) => e.preventDefault()}>
+                  <Space>
+                    <Image
+                      width={24}
+                      height={24}
+                      src="/assets/user_profile.png"
+                      style={{ borderRadius: "30px", marginTop: "-2px" }}
+                    />
+                    Profile
+                  </Space>
+                </a>
+              </Dropdown>
+            </div>
+          ) : (
+            <div
             style={{
               display: "flex",
               color: "#fff",
@@ -117,53 +180,11 @@ function Headers() {
               marginRight: "35px",
               gap: "25px",
             }}
-          >
-            <div className="hh" style={{ display: "flex", gap: "10px" }}>
-              {showFilter && (
-                <div
-                  onClick={() => {
-                    setHideFilter(true);
-                  }}
-                >
-                  <SearchOutlined />
-                </div>
-              )}
-              {hideFilter && (
-                // <div  className='sssds' style={hideFilter ? { display: 'block', visibility: 'visible', opacity: 1} : { visibility: 'hidden', opacity: 0}}>
-                <div>
-                  <Input
-                    addonAfter={
-                      <CloseOutlined
-                        onClick={() => {
-                          setHideFilter(false);
-                        }}
-                      />
-                    }
-                    style={{ height: "22px", marginTop: "8px" }}
-                  ></Input>
-                </div>
-              )}
+            >
+              <div><Link to={"/login"}>Login</Link></div>
+              <div><Link to={"/register"}>SignUp</Link></div>
             </div>
-            <div>
-              <QuestionCircleOutlined />
-            </div>
-            <div>
-              <BellOutlined />
-            </div>
-            <Dropdown overlay={menu}>
-              <a onClick={(e) => e.preventDefault()}>
-                <Space>
-                  <Image
-                    width={24}
-                    height={24}
-                    src="/assets/user_profile.png"
-                    style={{ borderRadius: "30px", marginTop: "-2px" }}
-                  />
-                  Profile
-                </Space>
-              </a>
-            </Dropdown>
-          </div>
+          )}
         </div>
       </div>
     </Header>
