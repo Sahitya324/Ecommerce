@@ -48,14 +48,12 @@ const menu = (
       {
         key: "3",
         label: (
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="/login"
+          <Link
+            to="/login"
             onClick={() => localStorage.clear()}
           >
             Logout
-          </a>
+          </Link>
         ),
         icon: <LogoutOutlined />,
       },
@@ -67,7 +65,7 @@ function Headers() {
   const [hideFilter, setHideFilter] = useState(false);
   const [showFilter, SetShowFilter] = useState(true);
 
-  const auth = localStorage.getItem("user");
+  const auth = localStorage.getItem('user');
 
   return (
     <Header

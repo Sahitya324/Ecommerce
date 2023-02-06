@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+// import Sidebar from "./Layout/Sidebar/Sidebar";
+// import Header from "./Layout/Header/Headers";
+import Header from "../Layout/Header/Headers";
+import Sidebar from "../Layout/Sidebar/Sidebar";
+import { Layout } from "antd";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -12,12 +17,13 @@ const Login = () => {
       method: "post",
       body: JSON.stringify({ email, password }),
       headers: {
-        "content-Type": "application/json",
+        "Content-Type": "application/json",
       },
     });
     result = await result.json();
-    if (result.name) {
-      localStorage.set("user", JSON.stringify(result));
+    console.log(result)
+    if (result) {
+      localStorage.setItem("user", JSON.stringify(result));
       navigate("/");
     } else {
       alert("Please enter correct details");
@@ -25,6 +31,14 @@ const Login = () => {
   };
 
   return (
+    <>
+    <Header />
+        <Layout
+          style={{
+            minHeight: "100vh",
+          }}
+        >
+          <Sidebar />
     <div className="login">
         <h1>Login</h1>
       <input
@@ -45,6 +59,8 @@ const Login = () => {
         Login
       </button>
     </div>
+    </Layout>
+    </>
   );
 };
 

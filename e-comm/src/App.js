@@ -14,13 +14,13 @@ function App() {
   return (
     <Layout className="site-layout">
       <BrowserRouter>
-        <Header />
+        {/* <Header />
         <Layout
           style={{
             minHeight: "100vh",
           }}
         >
-          <Sidebar />
+          <Sidebar /> */}
           <Routes>
             <Route element={<PrivateComponent />}>
               <Route path="/" element={<Dash />} />
@@ -34,7 +34,7 @@ function App() {
           }}
         >
         </Footer> */}
-        </Layout>
+        {/* </Layout> */}
       </BrowserRouter>
     </Layout>
   );
