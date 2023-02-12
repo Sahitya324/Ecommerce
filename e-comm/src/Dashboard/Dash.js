@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import Chart from "../Components/Chart/chart";
 import {
   Col,
   Layout,
@@ -11,7 +10,9 @@ import {
   Image,
   Button,
 } from "antd";
-import { InfoCircleOutlined } from "@ant-design/icons";
+import { InfoCircleOutlined, 
+  RightOutlined, LeftOutlined, ShoppingCartOutlined
+ } from "@ant-design/icons";
 import Header from "../Layout/Header/Headers";
 import Sidebar from "../Layout/Sidebar/Sidebar";
 
@@ -58,26 +59,35 @@ export default function Dash() {
             <div className="site-card-wrapper">
               <Row gutter={16}>
                 <Col span={6}>
-                  <Card hoverable bordered={false} style={{ height: "180px" }}>
-                    <h1>
+                  <Card hoverable title={"Card Details"} bordered={false} style={{ height: "280px" }}>
+                    {/* <h1>
                       Card Details
                       <Tooltip title={"Info"}>
                         <InfoCircleOutlined
                           style={{ float: "right", marginTop: "6px" }}
                         />
                       </Tooltip>
-                    </h1>
-                    Information
-                  </Card>
-                </Col>
-                <Col span={6}>
-                  <Card
-                    hoverable
-                    title="Card Details"
-                    bordered={false}
-                    style={{ height: "180px" }}
-                  >
-                    Card Details
+                    </h1> */}
+                    <div
+                      style={{
+                        display: "flex",
+                        height: "100%",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <img
+                        width={"full"}
+                        height={"175px"}
+                        alt="image0"
+                        src="/assets/image_1.png"
+                      />
+                      <div>
+                        <h1>Apple Watch 4</h1>
+                        <h2>Price</h2>
+                        <p>Details</p>
+                        <Button>Buy</Button>
+                      </div>
+                    </div>
                   </Card>
                 </Col>
                 <Col span={6}>
@@ -87,7 +97,63 @@ export default function Dash() {
                     bordered={false}
                     style={{ height: "280px" }}
                   >
-                    Card Details
+                    <div
+                      style={{
+                        display: "flex",
+                        height: "100%",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <img
+                        width={"full"}
+                        height={"175px"}
+                        alt="image0"
+                        src="/assets/image_3.png"
+                      />
+                      <div>
+                        <h1>Apple Airpods Pro</h1>
+                        <h2>Price</h2>
+                        <p>Details</p>
+                        <Button>Buy</Button>
+                      </div>
+                    </div>
+                  </Card>
+                </Col>
+                <Col span={6}>
+                  <Card
+                    hoverable
+                    title="Card Details"
+                    bordered={false}
+                    style={{ height: "280px" }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        height: "100%",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <img
+                        width={"full"}
+                        height={"175px"}
+                        alt="image0"
+                        src="/assets/image_2.png"
+                      />
+                      <div>
+                        <h1>Robot-tozalagich</h1>
+                        <h2>Price</h2>
+                        <p>Details</p>
+                        <Button
+                        style={{
+                          color: "#FFFFFF",
+                          borderRadius: "6px",
+                          background: "#0D63F3",
+                          fontWeight: 500,
+                        }}
+                        >Buy</Button>
+                        <ShoppingCartOutlined />
+                      </div>
+                    </div>
                   </Card>
                 </Col>
                 <Col span={6}>
@@ -111,7 +177,7 @@ export default function Dash() {
                         src="/assets/image_0.png"
                       />
                       <div>
-                        <h1>Apple Pod</h1>
+                        <h1>Apple Macbook Pro</h1>
                         <h2>Price</h2>
                         <p>Details</p>
                         <Button>Buy</Button>
@@ -135,25 +201,37 @@ export default function Dash() {
             }}
           >
             <Button
+            style={{
+              borderRadius: "100px",
+              height: "54px",
+              width: "54px",
+              marginRight: "20px",
+              color: "#FFFFFF",
+              fontFamily: 600,
+              fontSize: "20px",
+              alignItems: "center",
+              background: "linear-gradient(270deg, rgba(77, 94, 246, 0.2) 0%, rgba(246, 77, 77, 0.2) 100%)",
+            }}
               onClick={() => {
                 ref.current.prev();
               }}
             >
-              Prev
+              <LeftOutlined/>
             </Button>
 
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
-                width: "80%",
+                width: "85%",
                 height: "100%",
+                borderRadius: "20px"
               }}
             >
-              <Carousel ref={ref} autoplay={false} className="carousel">
+              <Carousel ref={ref} autoplay={false} className="carousel" style={{ borderRadius: "20px" }}>
                 <div>
                   {/* <h3 style={contentStyle}>1</h3> */}
-                  <Image src="/assets/image_9.png" />
+                  <Image style={{ borderRadius: "20px" }} src="/assets/image_9.png" />
                 </div>
                 <div>
                   <h3 style={contentStyle}>2</h3>
@@ -167,11 +245,22 @@ export default function Dash() {
               </Carousel>
             </div>
             <Button
+            style={{
+              borderRadius: "100px",
+              height: "54px",
+              width: "54px",
+              color: "#FFFFFF",
+              fontFamily: 600,
+              fontSize: "20px",
+              alignItems: "center",
+              marginLeft: "20px",
+              background: "linear-gradient(270deg, #4D5EF6 0%, #F64D4D 100%)",
+            }}
               onClick={() => {
                 ref.current.next();
               }}
             >
-              Next
+              <RightOutlined />
             </Button>
           </div>
           <div
@@ -181,19 +270,6 @@ export default function Dash() {
               minHeight: 260,
             }}
           >
-            <Card
-              style={{
-                display: "flex",
-                padding: 24,
-                // width: '100%',
-                minHeight: 380,
-              }}
-            >
-              <h1>Main Content</h1>
-              <div style={{ display: "flex", height: "300px" }}>
-                <Chart />
-              </div>
-            </Card>
           </div>
         </Content>
       </Layout>

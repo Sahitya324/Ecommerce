@@ -10,6 +10,7 @@ import {
   LogoutOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
+import { useUser } from "../../Context/userContext";
 import { Link } from "react-router-dom";
 
 const { Header } = Layout;
@@ -64,6 +65,8 @@ const menu = (
 function Headers() {
   const [hideFilter, setHideFilter] = useState(false);
   const [showFilter, SetShowFilter] = useState(true);
+
+  const { user } = useUser();
 
   const auth = localStorage.getItem('user');
 
@@ -159,7 +162,7 @@ function Headers() {
                     <Image
                       width={24}
                       height={24}
-                      src="/assets/user_profile.png"
+                      src={user?.user.image ? user?.user.image : "/assets/user_profile.png"}
                       style={{ borderRadius: "30px", marginTop: "-2px" }}
                     />
                     Profile

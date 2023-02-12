@@ -4,11 +4,14 @@ import { useNavigate } from "react-router-dom";
 // import Header from "./Layout/Header/Headers";
 import Header from "../Layout/Header/Headers";
 import Sidebar from "../Layout/Sidebar/Sidebar";
+import { useUser } from "../Context/userContext";
 import { Layout } from "antd";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { saveUser } = useUser();
 
   const navigate = useNavigate();
 
@@ -22,6 +25,7 @@ const Login = () => {
     });
     result = await result.json();
     console.log(result)
+    saveUser(result);
     if (result) {
       localStorage.setItem("user", JSON.stringify(result));
       navigate("/");
