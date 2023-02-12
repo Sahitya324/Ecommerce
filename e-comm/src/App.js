@@ -8,6 +8,7 @@ import "./App.css";
 
 import { Layout } from "antd";
 import AddProduct from "./Components/AddProduct";
+import ShowProduct from "./Components/ShowProducts";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/addProduct" element={<AddProduct />} />
+            <Route path="/showProduct" element={<ShowProduct />} />
           </Routes>
           {/* <Footer
           style={{

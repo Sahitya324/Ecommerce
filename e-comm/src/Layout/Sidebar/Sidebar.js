@@ -12,7 +12,7 @@ const { Sider } = Layout;
 
 const items = [
     getItem('Dashboard', 'sub1', <DashboardOutlined />, [
-      getItem('Analysis', '1'),
+      getItem('Show Products', '1', <Link to={"/showProduct"}></Link>),
       getItem('Monitor', '2'),
       getItem('Workplace', '3'),
     ]),
