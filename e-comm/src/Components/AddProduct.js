@@ -10,6 +10,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import app from "../firebase";
+import { useUser } from "../Context/userContext";
 
 const AddProduct = () => {
   const [name, setName] = useState("");
@@ -21,7 +22,10 @@ const AddProduct = () => {
   const [file, setFile] = useState(null);
   const [store, setStore] = useState("");
 
-  const navigate = useNavigate();
+  const{ user } = useUser();
+
+  const userId = user?.user._id;
+  const token = user?.auth;
 
   const uploadFile = (content) => {
     const storage = getStorage(app);
@@ -64,9 +68,10 @@ const AddProduct = () => {
   const handleAddProduct = async () => {
     let result = await fetch("http://localhost:5000/add-product", {
       method: "post",
-      body: JSON.stringify({ name, price, detail, category, company }),
+      body: JSON.stringify({ name, store, price, detail, category, userId, company }),
       headers: {
         "Content-Type": "application/json",
+        authorization: `bearer ${token}`
       },
     });
     result = await result.json();
@@ -77,6 +82,12 @@ const AddProduct = () => {
     // } else {
     //   alert("Please enter correct details");
     // }
+    setName("");
+    setPrice("");
+    setCategory("");
+    setCompany("");
+    setDetail("")
+    setStore("");
   };
 
   console.log(store);

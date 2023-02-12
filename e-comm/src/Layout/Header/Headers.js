@@ -103,9 +103,11 @@ function Headers() {
               gap: "10px",
               marginLeft: "15px",
             }}
+            href="/"
           >
             <img
               style={{ height: "28px" }}
+              alt="Logo"
               src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
             />
             <h1 style={{ fontSize: "18px", color: "#fff", marginTop: "9px" }}>

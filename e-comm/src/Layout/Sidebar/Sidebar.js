@@ -27,7 +27,7 @@ const items = [
       getItem('Search List(projects', '8'),
       getItem('Search List(application)', '9'),
     ]),
-     getItem('Search Table', '11', <Link to={"/addProduct"}></Link>)]),
+     getItem('Add Product', '11', <Link to={"/addProduct"}></Link>)]),
     getItem('Profile', 'sub5', <ProfileOutlined />, [getItem('Basic Profile', '12'), getItem('Advanced Profile', '13')]),
     // getItem('Files', '9', <FileOutlined />),
   ];
