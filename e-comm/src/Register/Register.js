@@ -11,11 +11,13 @@ import {
 } from "firebase/storage";
 import app from "../firebase";
 import axios from "axios";
+import { useUser } from "../Context/userContext";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const { saveUser } = useUser();
 
   const navigate = useNavigate();
 
@@ -93,7 +95,7 @@ const Register = () => {
     });
     result = await result.json();
     if (result.name) {
-      localStorage.setItem("user", JSON.stringify(result));
+      saveUser(result);
       navigate("/");
     } else {
       alert("Please enter correct details");

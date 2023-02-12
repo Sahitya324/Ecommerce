@@ -117,7 +117,7 @@ function verifyToken(req, res, next){
     }else{
         res.status(403).send({result: 'Please add token with header'});
     }
-    console.log("Middleware Called", token);
+    // console.log("Middleware Called", token);
 }
 
 if(process.env.NODE_ENV == 'production'){

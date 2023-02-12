@@ -54,6 +54,8 @@ const ShowProduct = () => {
     getProduct();
   }, []);
 
+  console.log(data)
+
   return (
     <>
       <Header />
@@ -77,8 +79,8 @@ const ShowProduct = () => {
             }}
           >
             <div className="site-card-wrapper">
-              <Row gutter={16}>
-                <Col span={6}>
+              <Row gutter={16} style={{gap: "20px"}}>
+                {/* <Col span={6}> */}
                   {data?.map((product, index) => (
                     <Card
                       key={product._id}
@@ -107,18 +109,18 @@ const ShowProduct = () => {
                           width={"full"}
                           height={"175px"}
                           alt="image0"
-                          src="/assets/image_1.png"
+                          src={product?.store}
                         />
                         <div>
-                          <h1>Apple Watch 4</h1>
-                          <h2>Price</h2>
-                          <p>Details</p>
+                          <h1>{product.name}</h1>
+                          <h2>{product.price}</h2>
+                          <p>{product.detail}</p>
                           <Button>Buy</Button>
                         </div>
                       </div>
                     </Card>
                   ))}
-                </Col>
+                {/* </Col> */}
               </Row>
             </div>
           </div>

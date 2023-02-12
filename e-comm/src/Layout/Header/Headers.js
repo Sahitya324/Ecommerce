@@ -164,7 +164,7 @@ function Headers() {
                     <Image
                       width={24}
                       height={24}
-                      src={user?.user.image ? user?.user.image : "/assets/user_profile.png"}
+                      src={user?.user.store ? user?.user.store : "/assets/user_profile.png"}
                       style={{ borderRadius: "30px", marginTop: "-2px" }}
                     />
                     Profile
