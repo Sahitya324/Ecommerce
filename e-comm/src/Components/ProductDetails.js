@@ -1,39 +1,30 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
-  Col,
-  Layout,
-  Menu,
-  Row,
-  Card,
-  Tooltip,
-  Image,
-  Button,
+    Col,
+    Layout,
+    Menu,
+    Row,
+    Card,
+    Tooltip,
+    Image,
+    Button,
 } from "antd";
 import Header from "../Layout/Header/Headers";
 import Sidebar from "../Layout/Sidebar/Sidebar";
-import { Link } from "react-router-dom";
+import axios from "axios";
 
 const { Content } = Layout;
-const { subMenu } = Menu;
 
-const contentStyle = {
-  // width: '80%',
-  height: "260px",
-  color: "#fff",
-  display: "flex",
-  justifyContent: "center",
-  alignItem: "center",
-  lineHeight: "260px",
-  textAlign: "center",
-  background: "#364d79",
-};
+const ProductDetails = () => {
+  const productId = useParams();
+  const [productData, setProductData] = useState();
 
-const ShowProduct = () => {
-  const ref = useRef();
-  const [data, setData] = useState();
+  const navigate = useNavigate();
 
-  const getProduct = async () => {
-    let result = await fetch("http://localhost:5000/products", {
+
+  const getProductDetails = async () => {
+    let result = await fetch(`http://localhost:5000/product/${productId.id}`, {
       headers: {
         authorization: `bearer ${
           JSON.parse(localStorage.getItem("user")).auth
@@ -41,14 +32,45 @@ const ShowProduct = () => {
       },
     });
     result = await result.json();
-    setData(result);
+    setProductData(result);
   };
 
-  useEffect(() => {
-    getProduct();
-  }, []);
+//   const deleteProduct = async () => {
+//     let result = await fetch(`http://localhost:5000/product/${productId.id}`, {
+//         headers: {
+//             method:"delete",
+//             authorization: `bearer ${
+//                 JSON.parse(localStorage.getItem("user")).auth
+//             }`,
+//         }
+//     });
+//     result = await result.json();
+//     if(result){
+//         navigate("/showProduct")
+//     }
+//   }
 
-  console.log(data);
+  const deleteProduct = async () => {
+    await axios.delete(`http://localhost:5000/product/${productId.id}`, {
+        headers: {
+            method:"delete",
+            authorization: `bearer ${
+                JSON.parse(localStorage.getItem("user")).auth
+            }`,
+        }
+    })
+    .then((resp) => {
+        console.log(resp);
+    })
+    // result = await result.json();
+    // if(result){
+    //     navigate("/showProduct")
+    // }
+  }
+
+  useEffect(() => {
+    getProductDetails();
+  }, []);
 
   return (
     <>
@@ -75,14 +97,12 @@ const ShowProduct = () => {
             <div className="site-card-wrapper">
               <Row gutter={16} style={{ gap: "20px" }}>
                 {/* <Col span={6}> */}
-                {data?.map((product, index) => (
-                  <Link to={`/productDetails/${product._id}`}>
                     <Card
-                      key={product._id}
+                      key={productData?._id}
                       hoverable
                       title={"Card Details"}
                       bordered={false}
-                      style={{ height: "280px" }}
+                      style={{ minHeight: "580px" }}
                     >
                       {/* <h1>
                       Card Details
@@ -93,7 +113,7 @@ const ShowProduct = () => {
                       </Tooltip>
                     </h1> */}
                       <div
-                        // key={product._id}
+                        // key={productData?._id}
                         style={{
                           display: "flex",
                           height: "100%",
@@ -104,18 +124,20 @@ const ShowProduct = () => {
                           width={"full"}
                           height={"175px"}
                           alt="image0"
-                          src={product?.store}
+                          src={productData?.store}
                         />
                         <div>
-                          <h1>{product.name}</h1>
-                          <h2>{product.price}</h2>
-                          <p>{product.detail}</p>
+                          <h1>{productData?.name}</h1>
+                          <h2>{productData?.price}</h2>
+                          <p>{productData?.detail}</p>
                           <Button>Buy</Button>
+                          <Button onClick={deleteProduct}>Delete</Button>
+                          <Link to={`/updateProduct/${productData?._id}`}>
+                          <Button>Update Product</Button>
+                          </Link>
                         </div>
                       </div>
                     </Card>
-                  </Link>
-                ))}
                 {/* </Col> */}
               </Row>
             </div>
@@ -126,4 +148,4 @@ const ShowProduct = () => {
   );
 };
 
-export default ShowProduct;
+export default ProductDetails;

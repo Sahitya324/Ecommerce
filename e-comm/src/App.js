@@ -9,6 +9,8 @@ import "./App.css";
 import { Layout } from "antd";
 import AddProduct from "./Components/AddProduct";
 import ShowProduct from "./Components/ShowProducts";
+import ProductDetails from "./Components/ProductDetails";
+import UpdateProduct from "./Components/UpdateProduct";
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/addProduct" element={<AddProduct />} />
             <Route path="/showProduct" element={<ShowProduct />} />
+            <Route path="/productDetails/:id" element={<ProductDetails />} />
+            <Route path="/updateProduct/:id" element={<UpdateProduct />} />
           </Routes>
           {/* <Footer
           style={{
