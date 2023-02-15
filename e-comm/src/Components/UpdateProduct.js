@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../Layout/Header/Headers";
 import Sidebar from "../Layout/Sidebar/Sidebar";
-import { Layout } from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Layout, Input, Button, Spin, Image } from "antd";
 import {
   getStorage,
   ref,
@@ -12,6 +13,7 @@ import {
 import app from "../firebase";
 import { useUser } from "../Context/userContext";
 import axios from "axios";
+import TextArea from "antd/lib/input/TextArea";
 
 const UpdateProduct = () => {
   const [name, setName] = useState("");
@@ -19,6 +21,7 @@ const UpdateProduct = () => {
   const [detail, setDetail] = useState("");
   const [category, setCategory] = useState("");
   const [company, setCompany] = useState("");
+  const [imageProgress, setImageProgress] = useState("");
   const desc = useRef();
   const [file, setFile] = useState(null);
   const [store, setStore] = useState("");
@@ -29,6 +32,22 @@ const UpdateProduct = () => {
   const { user } = useUser();
 
   const userId = user?.user._id;
+
+  const inputFile = useRef(null);
+
+  const openFiles = () => {
+    if (inputFile) {
+      //@ts-ignore
+      inputFile.current.value = null;
+      //@ts-ignore
+      inputFile.current.click();
+    }
+  };
+
+  const removeImage = () => {
+    setStore("");
+    setFile(null);
+  };
 
   const uploadFile = (content) => {
     const storage = getStorage(app);
@@ -102,7 +121,6 @@ const UpdateProduct = () => {
   const handleUpdateProduct = async () => {
     await axios
       .put(`http://localhost:5000/product/${productId?.id}`, formData, {
-        // body: JSON.stringify({}),
         headers: {
           "Content-Type": "application/json",
           authorization: `bearer ${
@@ -131,53 +149,210 @@ const UpdateProduct = () => {
         }}
       >
         <Sidebar />
-        <div className="login">
-          <h1>Add Product</h1>
-          <input
-            type={"text"}
-            value={name}
-            className="inputBox"
-            placeholder="enter name"
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            // style={{ display: "none" }}
-            type="file"
-            id="file"
-            accept="image/*"
-            onChange={(e) => setFile(e.target.files[0])}
-          />
-          <input
-            type={"text"}
-            value={price}
-            className="inputBox"
-            placeholder="enter price"
-            onChange={(e) => setPrice(e.target.value)}
-          />
-          <input
-            type={"text"}
-            value={detail}
-            className="inputBox"
-            placeholder="enter detail"
-            onChange={(e) => setDetail(e.target.value)}
-          />
-          <input
-            type={"text"}
-            value={category}
-            className="inputBox"
-            placeholder="enter category"
-            onChange={(e) => setCategory(e.target.value)}
-          />
-          <input
-            type={"text"}
-            value={company}
-            className="inputBox"
-            placeholder="enter company"
-            onChange={(e) => setCompany(e.target.value)}
-          />
-          <button className="appButton" onClick={handleUpdateProduct}>
-            Update Product
-          </button>
+        <div className="register">
+          <div className="form">
+            <h1
+              style={{
+                fontSize: "28px",
+                fontWeight: 700,
+              }}
+            >
+              Update Product
+            </h1>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                width: "100%",
+                minHeight: "300px",
+                justifyContent: "space-between",
+              }}
+            >
+              <div>
+                {file ? (
+                  <div
+                    display={"flex"}
+                    alignItems={"center"}
+                    marginTop={"20px"}
+                  >
+                    {/* {isZipFile(fileDocument) ? (
+                      <AiOutlineFileZip size={"40px"} />
+                    ) : (
+                      <AiOutlineFileMarkdown size={"40px"} />
+                    )} */}
+
+                    {imageProgress === 100 && (
+                      <div>
+                        <Image
+                          src={store}
+                          style={{
+                            borderRadius: "100px",
+                            width: "70px",
+                            height: "70px",
+                          }}
+                        />
+                        <Button
+                          size="small"
+                          style={{
+                            position: "absolute",
+                            color: "red",
+                            borderRadius: "100px",
+                            background: "#FFFFFF",
+                            marginTop: "42px",
+                            marginLeft: "-20px",
+                          }}
+                          icon={<DeleteOutlined />}
+                          onClick={removeImage}
+                        ></Button>
+                      </div>
+                    )}
+                    {imageProgress !== 100 && (
+                      <Spin tip="Loading" size="small">
+                        <div
+                          className="content"
+                          style={{ marginRight: "60px" }}
+                        />
+                      </Spin>
+                    )}
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <div>
+                      <Image
+                        src={store}
+                        style={{
+                          borderRadius: "100px",
+                          width: "70px",
+                          height: "70px",
+                        }}
+                      />
+                      <Button
+                        size="small"
+                        icon={<EditOutlined />}
+                        style={{
+                          // alignItems: "right",
+                          position: "absolute",
+                          background: "#F6F8FA",
+                          color: "#000000",
+                          marginLeft: "-20px",
+                          marginTop: "38px",
+                          borderRadius: "100px",
+                        }}
+                        onClick={openFiles}
+                      >
+                      </Button>
+                    </div>
+                    <h1 marginTop={"8px"} fontSize={"12px"}>
+                      Images Supported:{" "}
+                      <span style={{ fontSize: "14px", fontWeight: 600 }}>
+                        .jpeg, .png
+                      </span>
+                    </h1>
+                  </div>
+                )}
+
+                <input
+                  ref={inputFile}
+                  style={{ display: "none" }}
+                  type="file"
+                  id="file"
+                  accept="image/*"
+                  progress={imageProgress}
+                  onChange={(e) => setFile(e?.target?.files[0])}
+                />
+              </div>
+              <Input
+                type={"text"}
+                className="inputBox"
+                placeholder="enter name"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                style={{
+                  borderRadius: "6px",
+                  width: "100%",
+                  height: "40px",
+                }}
+              />
+              <Input
+                type={"text"}
+                className="inputBox"
+                placeholder="enter price"
+                onChange={(e) => setPrice(e.target.value)}
+                value={price}
+                style={{
+                  display: "flex",
+                  borderRadius: "6px",
+                  width: "100%",
+                  height: "40px",
+                  marginTop: 0,
+                }}
+              />
+              <TextArea
+                type={"text"}
+                className="inputBox"
+                placeholder="enter detail"
+                onChange={(e) => setDetail(e.target.value)}
+                value={detail}
+                style={{
+                  display: "flex",
+                  borderRadius: "6px",
+                  width: "100%",
+                  height: "40px",
+                  marginTop: 0,
+                }}
+              />
+              <Input
+                type={"text"}
+                className="inputBox"
+                placeholder="enter category"
+                onChange={(e) => setCategory(e.target.value)}
+                value={category}
+                style={{
+                  display: "flex",
+                  borderRadius: "6px",
+                  width: "100%",
+                  height: "40px",
+                  marginTop: 0,
+                }}
+              />
+              <Input
+                type={"text"}
+                className="inputBox"
+                placeholder="enter company"
+                onChange={(e) => setCompany(e.target.value)}
+                value={company}
+                style={{
+                  display: "flex",
+                  borderRadius: "6px",
+                  width: "100%",
+                  height: "40px",
+                  marginTop: 0,
+                }}
+              />
+              <Button
+                className="appButton"
+                onClick={() => handleUpdateProduct()}
+                type="primary"
+                style={{
+                  height: "40px",
+                  borderRadius: "6px",
+                  width: "100%",
+                  marginTop: 0,
+                  fontSize: "18px",
+                  fontWeight: 600,
+                }}
+              >
+                Update Product
+              </Button>
+            </div>
+          </div>
         </div>
       </Layout>
     </>

@@ -1,8 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  EyeTwoTone,
+  EyeInvisibleOutlined,
+  UploadOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 import Header from "../Layout/Header/Headers";
 import Sidebar from "../Layout/Sidebar/Sidebar";
-import { Layout } from "antd";
+import { Layout, Input, Button, Spin, Image } from "antd";
 import {
   getStorage,
   ref,
@@ -17,7 +23,19 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [imageProgress, setImageProgress] = useState("");
   const { saveUser } = useUser();
+
+  const inputFile = useRef(null);
+
+  const openFiles = () => {
+    if (inputFile) {
+      //@ts-ignore
+      inputFile.current.value = null;
+      //@ts-ignore
+      inputFile.current.click();
+    }
+  };
 
   const navigate = useNavigate();
 
@@ -28,24 +46,14 @@ const Register = () => {
     }
   });
 
+  const removeImage = () => {
+    setStore("");
+    setFile(null);
+  };
+
   const desc = useRef();
   const [file, setFile] = useState(null);
   const [store, setStore] = useState("");
-
-  // const submitHandler = async (e) => {
-  //   e.preventDefault();
-  //   const newPost = {
-  //     userId: user._id,
-  //     desc: desc.current.value,
-  //     img: store,
-  //   };
-  //   try {
-  //     await axios.post("/posts", newPost);
-  //     window.location.reload();
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
 
   const uploadFile = (content) => {
     const storage = getStorage(app);
@@ -60,6 +68,7 @@ const Register = () => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log("Upload is " + progress + "% done");
+        setImageProgress(progress);
         switch (snapshot.state) {
           case "paused":
             console.log("Upload is paused");
@@ -113,40 +122,177 @@ const Register = () => {
       >
         <Sidebar />
         <div className="register">
-          <h1>Register</h1>
-          <div>
-          <input
-            // style={{ display: "none" }}
-            type="file"
-            id="file"
-            accept="image/*"
-            onChange={(e) => setFile(e.target.files[0])}
-          />
+          <div className="form">
+            <h1
+              style={{
+                fontSize: "28px",
+                fontWeight: 700,
+              }}
+            >
+              REGISTER
+            </h1>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                width: "100%",
+                minHeight: "300px",
+                justifyContent: "space-between",
+              }}
+            >
+              <div>
+                {file ? (
+                  <div
+                    display={"flex"}
+                    alignItems={"center"}
+                    marginTop={"20px"}
+                  >
+                    {/* {isZipFile(fileDocument) ? (
+                      <AiOutlineFileZip size={"40px"} />
+                    ) : (
+                      <AiOutlineFileMarkdown size={"40px"} />
+                    )} */}
+
+                    {imageProgress === 100 && (
+                      <div>
+                        <Image
+                          src={store}
+                          style={{
+                            borderRadius: "100px",
+                            width: "70px",
+                            height: "70px",
+                          }}
+                        />
+                        <Button
+                          size="small"
+                          style={{
+                            position: "absolute",
+                            color: "red",
+                            borderRadius: "100px",
+                            background: "#FFFFFF",
+                            marginTop: "42px",
+                            marginLeft: "-20px",
+                          }}
+                          icon={<DeleteOutlined />}
+                          onClick={removeImage}
+                        ></Button>
+                      </div>
+                    )}
+                    {imageProgress !== 100 && (
+                      <Spin tip="Loading" size="small">
+                        <div
+                          className="content"
+                          style={{ marginRight: "60px" }}
+                        />
+                      </Spin>
+                    )}
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Image src="/assets/user_profile.png" preview={false} width={64} height={64}/>
+                    <Button
+                    size="small"
+                      icon={<UploadOutlined />}
+                      style={{
+                        // alignItems: "right",
+                        position: "absolute",
+                        background: "#59CF59",
+                        color: "#FFFFFF",
+                        marginTop: "45px",
+                        borderRadius: "100px",
+                        // width: "64px",
+                        // height: "64px"
+                      }}
+                      onClick={openFiles}
+                      disabled={file}
+                    >
+                    </Button>
+                    <h1 marginTop={"8px"} fontSize={"12px"}>
+                      Images Supported:{" "}
+                      <span style={{ fontSize: "14px", fontWeight: 600 }}>
+                        .zip, .md, .mdx
+                      </span>
+                    </h1>
+                  </div>
+                )}
+
+                <input
+                  ref={inputFile}
+                  style={{ display: "none" }}
+                  type="file"
+                  id="file"
+                  accept="image/*"
+                  progress={imageProgress}
+                  onChange={(e) => setFile(e?.target?.files[0])}
+                />
+              </div>
+              <Input
+                type={"text"}
+                className="inputBox"
+                placeholder="enter name"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                style={{
+                  borderRadius: "6px",
+                  width: "100%",
+                  height: "40px",
+                }}
+              />
+              <Input
+                type={"text"}
+                className="inputBox"
+                placeholder="enter email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                style={{
+                  display: "flex",
+                  borderRadius: "6px",
+                  width: "100%",
+                  height: "40px",
+                  marginTop: 0,
+                }}
+              />
+              <Input.Password
+                // type={"password"}
+                className="inputBox"
+                placeholder="password"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                iconRender={(visible) =>
+                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                }
+                style={{
+                  display: "flex",
+                  borderRadius: "6px",
+                  width: "100%",
+                  height: "40px",
+                  marginTop: 0,
+                }}
+              />
+              <Button
+                type="primary"
+                className="appButton"
+                onClick={() => handleRegister()}
+                style={{
+                  height: "40px",
+                  borderRadius: "6px",
+                  width: "100%",
+                  marginTop: 0,
+                  fontSize: "18px",
+                  fontWeight: 600,
+                }}
+              >
+                Register
+              </Button>
+            </div>
           </div>
-          <input
-            type={"text"}
-            className="inputBox"
-            placeholder="enter name"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-          />
-          <input
-            type={"text"}
-            className="inputBox"
-            placeholder="enter email"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          />
-          <input
-            type={"password"}
-            className="inputBox"
-            placeholder="password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          />
-          <button className="appButton" onClick={() => handleRegister()}>
-            Register
-          </button>
         </div>
       </Layout>
     </>

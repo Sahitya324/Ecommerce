@@ -4,6 +4,7 @@ const cors = require('cors');
 // require('./db/config')
 const User = require('./db/user');
 const Product = require('./db/product');
+const AddCart = require('./db/addCart');
 const mongoose = require('mongoose');
 
 const Jwt = require('jsonwebtoken');
@@ -101,6 +102,21 @@ app.get('/search/:key' , verifyToken, async (req, res) => {
         ]
     });
     res.send(result);
+})
+
+app.post('/addCart', verifyToken, async (req, res) => {
+    let addCart = new AddCart(req.body);
+    let result = await addCart.save();
+    res.send(result);
+})
+
+app.get('/cart', verifyToken, async (req, res) => {
+    let addCart = await AddCart.find();
+    if(addCart.length>0){
+        res.send(addCart);
+    }else{
+        res.send({result:"No Products Found"});
+    }
 })
 
 function verifyToken(req, res, next){

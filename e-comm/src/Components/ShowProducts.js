@@ -1,14 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Col,
-  Layout,
-  Menu,
-  Row,
-  Card,
-  Tooltip,
-  Image,
-  Button,
-} from "antd";
+import { Col, Layout, Menu, Row, Card, Tooltip, Image, Button } from "antd";
 import Header from "../Layout/Header/Headers";
 import Sidebar from "../Layout/Sidebar/Sidebar";
 import { Link } from "react-router-dom";
@@ -80,9 +71,9 @@ const ShowProduct = () => {
                     <Card
                       key={product._id}
                       hoverable
-                      title={"Card Details"}
+                      // title={"Card Details"}
                       bordered={false}
-                      style={{ height: "280px" }}
+                      style={{ width: "344px", display: "flex", alignItems: "center", borderRadius: "12px" }}
                     >
                       {/* <h1>
                       Card Details
@@ -96,21 +87,21 @@ const ShowProduct = () => {
                         // key={product._id}
                         style={{
                           display: "flex",
-                          height: "100%",
-                          flexDirection: "row",
+                          width: "100%",
+                          // height: "340px",
+                          alignItems: "center",
+                          flexDirection: "column",
                         }}
                       >
                         <img
-                          width={"full"}
-                          height={"175px"}
+                          width={"200px"}
+                          height={"200px"}
                           alt="image0"
                           src={product?.store}
                         />
                         <div>
-                          <h1>{product.name}</h1>
-                          <h2>{product.price}</h2>
-                          <p>{product.detail}</p>
-                          <Button>Buy</Button>
+                          <h1 style={{ fontSize: "24px", fontWeight: 600 }}>{product.name}</h1>
+                          <h2>{`Rs. ${product.price}`}</h2>
                         </div>
                       </div>
                     </Card>
