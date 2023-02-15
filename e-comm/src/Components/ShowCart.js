@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Col,
   Layout,
@@ -7,40 +6,43 @@ import {
   Row,
   Card,
   Tooltip,
-  Input,
   Image,
+  Tag,
   Button,
   Spin,
-  Modal,
-  Typography,
+  Modal, Typography, Input
 } from "antd";
 import Header from "../Layout/Header/Headers";
 import Sidebar from "../Layout/Sidebar/Sidebar";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useUser } from "../Context/userContext";
-import TextArea from "antd/lib/input/TextArea";
 
 const { Content } = Layout;
+const { subMenu } = Menu;
 
-const ProductDetails = () => {
-  const productId = useParams();
-  const [productData, setProductData] = useState();
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [detail, setDetail] = useState("");
-  const [category, setCategory] = useState("");
-  const [company, setCompany] = useState("");
-  const [store, setStore] = useState("");
+const contentStyle = {
+  // width: '80%',
+  height: "260px",
+  color: "#fff",
+  display: "flex",
+  justifyContent: "center",
+  alignItem: "center",
+  lineHeight: "260px",
+  textAlign: "center",
+  background: "#364d79",
+};
+
+const ShowCart = () => {
+  const ref = useRef();
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  const [cart, setCart] = useState([]);
+  const [ address, setAddress ] = useState("");
+  const [ pinCode, setPinCode ] = useState("");
+  const [ phoneNumber, setPhoneNumber ] = useState("");
 
   const navigate = useNavigate();
-
   const { user } = useUser();
-
-  const cartId = productId?.id;
-  const userId = user?.user._id;
 
   const [open, setOpen] = useState(false);
 
@@ -60,33 +62,9 @@ const ProductDetails = () => {
     setOpen(false);
   };
 
-  const getProductDetails = async () => {
-    setLoading(true);
+  const deleteCart = async (cartId) => {
     await axios
-      .get(`http://localhost:5000/product/${productId?.id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `bearer ${
-            JSON.parse(localStorage.getItem("user")).auth
-          }`,
-        },
-      })
-      .then((resp) => {
-        // console.log(resp);
-        setName(resp?.data.name);
-        setStore(resp?.data.store);
-        setPrice(resp?.data.price);
-        setDetail(resp?.data.detail);
-        setCategory(resp?.data.category);
-        setCompany(resp?.data.company);
-        setProductData(resp?.data);
-        setLoading(false);
-      });
-  };
-
-  const deleteProduct = async () => {
-    await axios
-      .delete(`http://localhost:5000/product/${productId.id}`, {
+      .delete(`http://localhost:5000/cart/${cartId}`, {
         headers: {
           method: "delete",
           authorization: `bearer ${
@@ -99,50 +77,24 @@ const ProductDetails = () => {
       });
   };
 
-  const addCart = async () => {
-    let result = await fetch("http://localhost:5000/addCart", {
-      method: "post",
-      body: JSON.stringify({
-        name,
-        store,
-        price,
-        detail,
-        category,
-        userId,
-        company,
-        cartId,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `bearer ${
-          JSON.parse(localStorage.getItem("user")).auth
-        }`,
-      },
-    });
-    result = await result.json();
-  };
-
   const getCart = async () => {
-    let result = await fetch(`http://localhost:5000/cart`, {
+    setLoading(true);
+    let result = await fetch("http://localhost:5000/cart", {
       headers: {
         authorization: `bearer ${
-          JSON.parse(localStorage.getItem("user")).auth
+          JSON.parse(localStorage.getItem("user"))?.auth
         }`,
       },
     });
     result = await result.json();
-    const filterCart = result?.filter((cartProductId) => {
-      if (cartProductId?.cartId === cartId) {
-        return true;
-      }
-      return false;
+    setLoading(false);
+    const filterData = result?.filter((data) => {
+      return data?.userId === user?.user?._id;
     });
-    console.log(filterCart);
-    setCart(filterCart);
+    setData(filterData);
   };
 
   useEffect(() => {
-    getProductDetails();
     getCart();
   }, []);
 
@@ -171,11 +123,11 @@ const ProductDetails = () => {
             {loading ? (
               <div
                 style={{
-                  width: "100%",
+                  width:"100%",
                   display: "flex",
                   padding: "40px",
                   alignItems: "center",
-                  justifyContent: "center",
+                  justifyContent: "center"
                 }}
               >
                 <Spin tip="Loading" size="large">
@@ -183,23 +135,31 @@ const ProductDetails = () => {
                 </Spin>
               </div>
             ) : (
-              <div className="site-card-wrapper">
-                {/* <Row gutter={16} style={{ gap: "20px" }}> */}
-                {/* <Col span={6}> */}
-                <Card
-                  key={productData?._id}
-                  hoverable
-                  // title={"Card Details"}
-                  bordered={false}
-                  style={{
-                    minHeight: "580px",
-                    background: "#bed4ff ",
-                    display: "flex",
-                    alignItems: "center",
-                    borderRadius: "20px",
-                  }}
-                >
-                  {/* <h1>
+              <div
+                className="site-card-wrapper"
+                style={{
+                  displayL: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                {data?.length > 0 ? (
+                  data?.map((product, index) => (
+                    <Card
+                      key={product?._id}
+                      hoverable
+                      // title={"Card Details"}
+                      bordered={false}
+                      style={{
+                        //   width: "344px",
+                        display: "flex",
+                        alignItems: "center",
+                        borderRadius: "12px",
+                        marginTop: "20px",
+                        backgroundImage: "url(/gradient-circle.png)",
+                        backgroundRepeat: "no-repeat"
+                      }}
+                    >
+                      {/* <h1>
                       Card Details
                       <Tooltip title={"Info"}>
                         <InfoCircleOutlined
@@ -207,45 +167,49 @@ const ProductDetails = () => {
                         />
                       </Tooltip>
                     </h1> */}
-                  <div
-                    // key={productData?._id}
-                    style={{
-                      display: "flex",
-                      height: "100%",
-                      flexDirection: "row",
-                      // alignItems: "center"
-                    }}
-                  >
-                    <img
-                      width={"full"}
-                      height={"240px"}
-                      alt="image0"
-                      src={productData?.store}
-                      style={{
-                        marginTop: "20px",
-                        marginRight: "60px",
-                        borderRadius: "20px",
-                      }}
-                    />
-                    <div>
-                      <h1 style={{ fontSize: "28px", fontWeight: 600 }}>
-                        {productData?.name}
-                      </h1>
-                      <h2
-                        style={{ marginTop: "24px" }}
-                      >{`Rs. ${productData?.price}`}</h2>
-                      <p
+                      <div
+                        // key={product._id}
                         style={{
-                          fontSize: "18px",
-                          fontWeight: 600,
-                          marginTop: "24px",
-                          whiteSpace: "pre-wrap",
+                          display: "flex",
+                          width: "100%",
+                          // height: "340px",
+                          alignItems: "center",
+                          flexDirection: "row",
                         }}
                       >
-                        {productData?.detail}
-                      </p>
-                      {user?.user?._id !== productData?.userId && (
-                        <Button
+                        <img
+                          width={"200px"}
+                          height={"200px"}
+                          alt="image0"
+                          src={product?.store}
+                          style={{
+                            marginRight: "60px",
+                            borderRadius: "20px"
+                          }}
+                        />
+                        <div>
+                          <Link to={`/productDetails/${product?.cartId}`}>
+                            <h1 style={{ fontSize: "24px", fontWeight: 600 }}>
+                              {product.name}
+                            </h1>
+                            <h2>{`Rs. ${product.price}`}</h2>
+                            <div>
+                              <Tag color="processing">{product.company}</Tag>
+                              <Tag color="processing">{product.category}</Tag>
+                            </div>
+                            <p
+                              style={{
+                                display: "-webkit-Box",
+                                overflow: "hidden",
+                                WebkitLineClamp: "3",
+                                WebkitBoxOrient: "vertical",
+                                marginTop: "8px",
+                              }}
+                            >
+                              {product.detail}
+                            </p>
+                          </Link>
+                          <Button
                           type="primary"
                           style={{
                             height: "40px",
@@ -262,61 +226,46 @@ const ProductDetails = () => {
                         >
                           Buy
                         </Button>
-                      )}
-                      {user?.user?._id === productData?.userId && (
-                        <>
-                          <Link to={`/updateProduct/${productData?._id}`}>
-                            <Button
-                              type="primary"
-                              style={{
-                                height: "40px",
-                                borderRadius: "6px",
-                                width: "184px",
-                                marginTop: 0,
-                                marginLeft: "20px",
-                                fontSize: "18px",
-                                fontWeight: 600,
-                              }}
-                            >
-                              Update Product
-                            </Button>
-                          </Link>
                           <Button
                             type="primary"
                             style={{
                               height: "40px",
                               borderRadius: "6px",
                               width: "184px",
-                              marginTop: 0,
+                              // marginTop: "20px",
                               marginLeft: "20px",
                               fontSize: "18px",
                               fontWeight: 600,
                             }}
-                            onClick={deleteProduct}
+                            onClick={() => deleteCart(product._id)}
                           >
-                            Remove
+                            Remove from Cart
                           </Button>
-                        </>
-                      )}
-                      <Button
-                        type="primary"
-                        style={{
-                          height: "40px",
-                          borderRadius: "6px",
-                          width: "184px",
-                          marginTop: 0,
-                          marginLeft: "20px",
-                          fontSize: "18px",
-                          fontWeight: 600,
-                        }}
-                        disabled={cart?.length !== 0 ? true : false}
-                        onClick={addCart}
-                      >
-                        Add to Cart
-                      </Button>
-                    </div>
+                        </div>
+                      </div>
+                    </Card>
+                  ))
+                ) : (
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      height: "100%",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <h1
+                      style={{
+                        display: "flex",
+                        fontSize: "24px",
+                        fontWeight: 700,
+                      }}
+                    >
+                      No Product is Added to cart
+                    </h1>
                   </div>
-                </Card>
+                )}
               </div>
             )}
           </div>
@@ -369,7 +318,7 @@ const ProductDetails = () => {
                 type={"text"}
                 className="inputBox"
                 placeholder="enter address"
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setAddress(e.target.value)}
                 // value={name}
                 style={{
                   borderRadius: "6px",
@@ -399,7 +348,7 @@ const ProductDetails = () => {
                 type={"text"}
                 className="inputBox"
                 placeholder="enter pincode"
-                onChange={(e) => setPrice(e.target.value)}
+                onChange={(e) => setPinCode(e.target.value)}
                 // value={price}
                 style={{
                   display: "flex",
@@ -431,7 +380,7 @@ const ProductDetails = () => {
                 type={"text"}
                 className="inputBox"
                 placeholder="enter PhoneNumber"
-                onChange={(e) => setDetail(e.target.value)}
+                onChange={(e) => setPhoneNumber(e.target.value)}
                 // value={detail}
                 style={{
                   display: "flex",
@@ -457,4 +406,4 @@ const ProductDetails = () => {
   );
 };
 
-export default ProductDetails;
+export default ShowCart;

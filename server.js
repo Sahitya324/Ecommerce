@@ -119,6 +119,11 @@ app.get('/cart', verifyToken, async (req, res) => {
     }
 })
 
+app.delete('/cart/:id', verifyToken, async (req, res) => {
+    const result = await AddCart.deleteOne({_id: req.params.id});
+    res.send(result);
+})
+
 function verifyToken(req, res, next){
     let token = req.headers['authorization']; 
     if(token){

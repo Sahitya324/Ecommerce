@@ -11,6 +11,7 @@ import AddProduct from "./Components/AddProduct";
 import ShowProduct from "./Components/ShowProducts";
 import ProductDetails from "./Components/ProductDetails";
 import UpdateProduct from "./Components/UpdateProduct";
+import ShowCart from "./Components/ShowCart";
 
 function App() {
   return (
@@ -23,18 +24,19 @@ function App() {
           }}
         >
           <Sidebar /> */}
-          <Routes>
-            <Route element={<PrivateComponent />}>
-              <Route path="/" element={<Dash />} />
-            </Route>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+        <Routes>
+          <Route element={<PrivateComponent />}>
             <Route path="/addProduct" element={<AddProduct />} />
             <Route path="/showProduct" element={<ShowProduct />} />
             <Route path="/productDetails/:id" element={<ProductDetails />} />
             <Route path="/updateProduct/:id" element={<UpdateProduct />} />
-          </Routes>
-          {/* <Footer
+            <Route path="/showCart" element={<ShowCart />} />
+          </Route>
+          <Route path="/" element={<Dash />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+        {/* <Footer
           style={{
             textAlign: 'center',
           }}

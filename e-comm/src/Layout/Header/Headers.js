@@ -9,6 +9,7 @@ import {
   CloseOutlined,
   LogoutOutlined,
   SettingOutlined,
+  ShoppingCartOutlined
 } from "@ant-design/icons";
 import { useUser } from "../../Context/userContext";
 import { Link } from "react-router-dom";
@@ -62,7 +63,7 @@ const menu = (
   />
 );
 
-function Headers() {
+const Headers = ({search}) => {
   const [hideFilter, setHideFilter] = useState(false);
   const [showFilter, SetShowFilter] = useState(true);
 
@@ -111,7 +112,7 @@ function Headers() {
               src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
             />
             <h1 style={{ fontSize: "18px", color: "#fff", marginTop: "9px" }}>
-              Ant Design Pro
+              GetGadgets
             </h1>
           </a>
           {auth ? (
@@ -147,13 +148,16 @@ function Headers() {
                           }}
                         />
                       }
+                      onChange={search}
                       style={{ height: "22px", marginTop: "8px" }}
                     ></Input>
                   </div>
                 )}
               </div>
               <div>
-                <QuestionCircleOutlined />
+                <Link to={"/showCart"}>
+                <ShoppingCartOutlined />
+                </Link>
               </div>
               <div>
                 <BellOutlined />
@@ -164,7 +168,7 @@ function Headers() {
                     <Image
                       width={24}
                       height={24}
-                      src={user?.user.store ? user?.user.store : "/assets/user_profile.png"}
+                      src={user?.user?.store ? user?.user?.store : "/assets/user_profile.png"}
                       style={{ borderRadius: "30px", marginTop: "-2px" }}
                     />
                     Profile

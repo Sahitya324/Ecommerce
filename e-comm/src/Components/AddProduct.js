@@ -30,6 +30,14 @@ const AddProduct = () => {
   const userId = user?.user?._id;
   const token = user?.auth;
 
+  // let navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (user === null) {
+  //     navigate("/login", { replace: true });
+  //   }
+  // }, [user, navigate]);
+
   const inputFile = useRef(null);
 
   const openFiles = () => {

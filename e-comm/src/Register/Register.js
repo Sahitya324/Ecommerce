@@ -103,7 +103,7 @@ const Register = () => {
       },
     });
     result = await result.json();
-    if (result.name) {
+    if (result) {
       saveUser(result);
       navigate("/");
     } else {
@@ -121,7 +121,9 @@ const Register = () => {
         }}
       >
         <Sidebar />
-        <div className="register">
+        <div className="register" style={{
+          backgroundImage: "/assets/back.jpg"
+        }}>
           <div className="form">
             <h1
               style={{

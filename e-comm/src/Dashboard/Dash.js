@@ -9,10 +9,14 @@ import {
   Carousel,
   Image,
   Button,
+  Tag,
 } from "antd";
-import { InfoCircleOutlined, 
-  RightOutlined, LeftOutlined, ShoppingCartOutlined
- } from "@ant-design/icons";
+import {
+  InfoCircleOutlined,
+  RightOutlined,
+  LeftOutlined,
+  StarOutlined,
+} from "@ant-design/icons";
 import Header from "../Layout/Header/Headers";
 import Sidebar from "../Layout/Sidebar/Sidebar";
 
@@ -59,7 +63,19 @@ export default function Dash() {
             <div className="site-card-wrapper">
               <Row gutter={16}>
                 <Col span={6}>
-                  <Card hoverable title={"Card Details"} bordered={false} style={{ height: "280px" }}>
+                  <Card
+                    hoverable
+                    bordered={false}
+                    style={{
+                      width: "384px",
+                      display: "flex",
+                      alignItems: "center",
+                      borderRadius: "12px",
+                      backgroundImage: "url(/gradient-circle.png)",
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "cover",
+                    }}
+                  >
                     {/* <h1>
                       Card Details
                       <Tooltip title={"Info"}>
@@ -73,6 +89,7 @@ export default function Dash() {
                         display: "flex",
                         height: "100%",
                         flexDirection: "row",
+                        gap: "18px",
                       }}
                     >
                       <img
@@ -80,12 +97,56 @@ export default function Dash() {
                         height={"175px"}
                         alt="image0"
                         src="/assets/image_1.png"
+                        style={{
+                          borderRadius: "20px",
+                        }}
                       />
                       <div>
                         <h1>Apple Watch 4</h1>
-                        <h2>Price</h2>
-                        <p>Details</p>
-                        <Button>Buy</Button>
+                        <div>
+                          <StarOutlined
+                            style={{
+                              color: "yellow",
+                            }}
+                          />
+                          <StarOutlined
+                            style={{
+                              color: "yellow",
+                              marginLeft: "4px",
+                            }}
+                          />
+                          <StarOutlined
+                            style={{
+                              color: "yellow",
+                              marginLeft: "4px",
+                            }}
+                          />
+                          <StarOutlined
+                            style={{
+                              color: "yellow",
+                              marginLeft: "4px",
+                            }}
+                          />
+                        </div>
+                        <h2>RS. 20,000</h2>
+                        <div>
+                          <Tag
+                            color="processing"
+                            style={{
+                              borderRadius: "20px",
+                            }}
+                          >
+                            Apple
+                          </Tag>
+                          <Tag
+                            color="processing"
+                            style={{
+                              borderRadius: "20px",
+                            }}
+                          >
+                            Smart Watch
+                          </Tag>
+                        </div>
                       </div>
                     </div>
                   </Card>
@@ -93,15 +154,23 @@ export default function Dash() {
                 <Col span={6}>
                   <Card
                     hoverable
-                    title="Card Details"
                     bordered={false}
-                    style={{ height: "280px" }}
+                    style={{
+                      width: "384px",
+                      display: "flex",
+                      alignItems: "center",
+                      borderRadius: "12px",
+                      backgroundImage: "url(/gradient-circle.png)",
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "cover",
+                    }}
                   >
                     <div
                       style={{
                         display: "flex",
                         height: "100%",
                         flexDirection: "row",
+                        gap: "18px",
                       }}
                     >
                       <img
@@ -109,12 +178,57 @@ export default function Dash() {
                         height={"175px"}
                         alt="image0"
                         src="/assets/image_3.png"
+                        style={{
+                          borderRadius: "20px",
+                        }}
                       />
                       <div>
                         <h1>Apple Airpods Pro</h1>
-                        <h2>Price</h2>
-                        <p>Details</p>
-                        <Button>Buy</Button>
+                        <div>
+                          <StarOutlined
+                            style={{
+                              color: "yellow",
+                            }}
+                          />
+                          <StarOutlined
+                            style={{
+                              color: "yellow",
+                              marginLeft: "4px",
+                            }}
+                          />
+                          <StarOutlined
+                            style={{
+                              color: "yellow",
+                              marginLeft: "4px",
+                            }}
+                          />
+                          <StarOutlined
+                            style={{
+                              color: "yellow",
+                              marginLeft: "4px",
+                            }}
+                          />
+                        </div>
+                        <h2>Rs. 15,000</h2>
+                        <div>
+                          <Tag
+                            color="processing"
+                            style={{
+                              borderRadius: "20px",
+                            }}
+                          >
+                            Apple
+                          </Tag>
+                          <Tag
+                            color="processing"
+                            style={{
+                              borderRadius: "20px",
+                            }}
+                          >
+                            Earphone
+                          </Tag>
+                        </div>
+                        {/* <Button>Buy</Button> */}
                       </div>
                     </div>
                   </Card>
@@ -122,15 +236,23 @@ export default function Dash() {
                 <Col span={6}>
                   <Card
                     hoverable
-                    title="Card Details"
                     bordered={false}
-                    style={{ height: "280px" }}
+                    style={{
+                      width: "384px",
+                      display: "flex",
+                      alignItems: "center",
+                      borderRadius: "12px",
+                      backgroundImage: "url(/gradient-circle.png)",
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "cover",
+                    }}
                   >
                     <div
                       style={{
                         display: "flex",
                         height: "100%",
                         flexDirection: "row",
+                        gap: "18px",
                       }}
                     >
                       <img
@@ -138,20 +260,56 @@ export default function Dash() {
                         height={"175px"}
                         alt="image0"
                         src="/assets/image_2.png"
+                        style={{
+                          borderRadius: "20px",
+                        }}
                       />
                       <div>
                         <h1>Robot-tozalagich</h1>
-                        <h2>Price</h2>
-                        <p>Details</p>
-                        <Button
-                        style={{
-                          color: "#FFFFFF",
-                          borderRadius: "6px",
-                          background: "#0D63F3",
-                          fontWeight: 500,
-                        }}
-                        >Buy</Button>
-                        <ShoppingCartOutlined />
+                        <div>
+                          <StarOutlined
+                            style={{
+                              color: "yellow",
+                            }}
+                          />
+                          <StarOutlined
+                            style={{
+                              color: "yellow",
+                              marginLeft: "4px",
+                            }}
+                          />
+                          <StarOutlined
+                            style={{
+                              color: "yellow",
+                              marginLeft: "4px",
+                            }}
+                          />
+                          <StarOutlined
+                            style={{
+                              color: "yellow",
+                              marginLeft: "4px",
+                            }}
+                          />
+                        </div>
+                        <h2>Rs. 80,000</h2>
+                        <div>
+                          <Tag
+                            color="processing"
+                            style={{
+                              borderRadius: "20px",
+                            }}
+                          >
+                            Apple
+                          </Tag>
+                          <Tag
+                            color="processing"
+                            style={{
+                              borderRadius: "20px",
+                            }}
+                          >
+                            Tech
+                          </Tag>
+                        </div>
                       </div>
                     </div>
                   </Card>
@@ -159,15 +317,23 @@ export default function Dash() {
                 <Col span={6}>
                   <Card
                     hoverable
-                    title="Card Details"
                     bordered={false}
-                    style={{ height: "280px" }}
+                    style={{
+                      width: "384px",
+                      display: "flex",
+                      alignItems: "center",
+                      borderRadius: "12px",
+                      backgroundImage: "url(/gradient-circle.png)",
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "cover",
+                    }}
                   >
                     <div
                       style={{
                         display: "flex",
                         height: "100%",
                         flexDirection: "row",
+                        gap: "18px",
                       }}
                     >
                       <img
@@ -175,12 +341,57 @@ export default function Dash() {
                         height={"175px"}
                         alt="image0"
                         src="/assets/image_0.png"
+                        style={{
+                          borderRadius: "20px",
+                        }}
                       />
                       <div>
                         <h1>Apple Macbook Pro</h1>
-                        <h2>Price</h2>
-                        <p>Details</p>
-                        <Button>Buy</Button>
+                        <div>
+                          <StarOutlined
+                            style={{
+                              color: "yellow",
+                            }}
+                          />
+                          <StarOutlined
+                            style={{
+                              color: "yellow",
+                              marginLeft: "4px",
+                            }}
+                          />
+                          <StarOutlined
+                            style={{
+                              color: "yellow",
+                              marginLeft: "4px",
+                            }}
+                          />
+                          <StarOutlined
+                            style={{
+                              color: "yellow",
+                              marginLeft: "4px",
+                            }}
+                          />
+                        </div>
+                        <h2>Rs. 1,48000</h2>
+                        <div>
+                          <Tag
+                            color="processing"
+                            style={{
+                              borderRadius: "20px",
+                            }}
+                          >
+                            Apple
+                          </Tag>
+                          <Tag
+                            color="processing"
+                            style={{
+                              borderRadius: "20px",
+                            }}
+                          >
+                            Laptop
+                          </Tag>
+                        </div>
+                        {/* <Button>Buy</Button> */}
                       </div>
                     </div>
                   </Card>
@@ -201,22 +412,23 @@ export default function Dash() {
             }}
           >
             <Button
-            style={{
-              borderRadius: "100px",
-              height: "54px",
-              width: "54px",
-              marginRight: "20px",
-              color: "#FFFFFF",
-              fontFamily: 600,
-              fontSize: "20px",
-              alignItems: "center",
-              background: "linear-gradient(270deg, rgba(77, 94, 246, 0.2) 0%, rgba(246, 77, 77, 0.2) 100%)",
-            }}
+              style={{
+                borderRadius: "100px",
+                height: "54px",
+                width: "54px",
+                marginRight: "20px",
+                color: "#FFFFFF",
+                fontFamily: 600,
+                fontSize: "20px",
+                alignItems: "center",
+                background:
+                  "linear-gradient(270deg, rgba(77, 94, 246, 0.2) 0%, rgba(246, 77, 77, 0.2) 100%)",
+              }}
               onClick={() => {
                 ref.current.prev();
               }}
             >
-              <LeftOutlined/>
+              <LeftOutlined />
             </Button>
 
             <div
@@ -225,37 +437,62 @@ export default function Dash() {
                 flexDirection: "column",
                 width: "85%",
                 height: "100%",
-                borderRadius: "20px"
+                borderRadius: "20px",
               }}
             >
-              <Carousel ref={ref} autoplay={false} className="carousel" style={{ borderRadius: "20px" }}>
+              <Carousel
+                ref={ref}
+                autoplay={false}
+                className="carousel"
+                style={{ borderRadius: "20px" }}
+              >
                 <div>
                   {/* <h3 style={contentStyle}>1</h3> */}
-                  <Image style={{ borderRadius: "20px" }} src="/assets/image_9.png" />
+                  <Image
+                    width={"100%"}
+                    height={"100%"}
+                    style={{ borderRadius: "20px" }}
+                    src="/banner04.jpeg"
+                  />
                 </div>
                 <div>
-                  <h3 style={contentStyle}>2</h3>
+                <Image
+                    width={"100%"}
+                    height={"100%"}
+                    style={{ borderRadius: "20px" }}
+                    src="/banner03.jpeg"
+                  />
                 </div>
                 <div>
-                  <h3 style={contentStyle}>3</h3>
+                <Image
+                    width={"100%"}
+                    height={"100%"}
+                    style={{ borderRadius: "20px" }}
+                    src="/banner02.jpeg"
+                  />
                 </div>
                 <div>
-                  <h3 style={contentStyle}>4</h3>
+                <Image
+                    width={"100%"}
+                    height={"100%"}
+                    style={{ borderRadius: "20px" }}
+                    src="/banner01.jpeg"
+                  />
                 </div>
               </Carousel>
             </div>
             <Button
-            style={{
-              borderRadius: "100px",
-              height: "54px",
-              width: "54px",
-              color: "#FFFFFF",
-              fontFamily: 600,
-              fontSize: "20px",
-              alignItems: "center",
-              marginLeft: "20px",
-              background: "linear-gradient(270deg, #4D5EF6 0%, #F64D4D 100%)",
-            }}
+              style={{
+                borderRadius: "100px",
+                height: "54px",
+                width: "54px",
+                color: "#FFFFFF",
+                fontFamily: 600,
+                fontSize: "20px",
+                alignItems: "center",
+                marginLeft: "20px",
+                background: "linear-gradient(270deg, #4D5EF6 0%, #F64D4D 100%)",
+              }}
               onClick={() => {
                 ref.current.next();
               }}
@@ -269,8 +506,7 @@ export default function Dash() {
               padding: 24,
               minHeight: 260,
             }}
-          >
-          </div>
+          ></div>
         </Content>
       </Layout>
     </>
